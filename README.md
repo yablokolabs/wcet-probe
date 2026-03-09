@@ -129,6 +129,8 @@ Measured on 2.79 GHz x86_64:
 
 ## Architecture
 
+![wcet-probe architecture](docs/architecture.svg)
+
 ```
 ┌──────────────────────────────────────────────┐
 │  Your Code                                   │

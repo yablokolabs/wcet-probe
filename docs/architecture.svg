@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <text x="450" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#1b5e20">wcet-probe — Instrumentation Pipeline</text>
+
+  <!-- Stage 1: Instrumented Function -->
+  <rect x="20" y="60" width="130" height="75" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="85" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">Instrumented</text>
+  <text x="85" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">C++ Function</text>
+  <text x="85" y="120" text-anchor="middle" font-size="8" fill="#888">WCET_PROBE_SCOPE</text>
+
+  <!-- Stage 2: Entry Probe -->
+  <rect x="175" y="60" width="110" height="75" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" filter="url(#shadow)"/>
+  <text x="230" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Entry Probe</text>
+  <text x="230" y="105" text-anchor="middle" font-size="9" fill="#666">rdtsc</text>
+  <text x="230" y="120" text-anchor="middle" font-size="8" fill="#888">~9ns overhead</text>
+
+  <!-- Stage 3: Execution -->
+  <rect x="310" y="60" width="110" height="75" rx="6" fill="#f1f8e9" stroke="#7cb342" stroke-width="1" filter="url(#shadow)"/>
+  <text x="365" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Function</text>
+  <text x="365" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Execution</text>
+  <text x="365" y="120" text-anchor="middle" font-size="8" fill="#888">Measured code</text>
+
+  <!-- Stage 4: Exit Probe -->
+  <rect x="445" y="60" width="110" height="75" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" filter="url(#shadow)"/>
+  <text x="500" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Exit Probe</text>
+  <text x="500" y="105" text-anchor="middle" font-size="9" fill="#666">rdtscp</text>
+  <text x="500" y="120" text-anchor="middle" font-size="8" fill="#888">~11ns overhead</text>
+
+  <!-- Stage 5: Ring Buffer -->
+  <rect x="580" y="60" width="120" height="75" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" filter="url(#shadow)"/>
+  <text x="640" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Ring Buffer</text>
+  <text x="640" y="105" text-anchor="middle" font-size="9" fill="#666">Lock-free · 1M</text>
+  <text x="640" y="120" text-anchor="middle" font-size="8" fill="#888">~3ns record</text>
+
+  <!-- Stage 6: Trace File -->
+  <rect x="725" y="60" width="155" height="75" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="802" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">Binary Trace</text>
+  <text x="802" y="105" text-anchor="middle" font-size="9" fill="#666">.wcet format</text>
+  <text x="802" y="120" text-anchor="middle" font-size="8" fill="#888">Header + 32B samples</text>
+
+  <!-- Arrows -->
+  <line x1="150" y1="97" x2="175" y2="97" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="285" y1="97" x2="310" y2="97" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="97" x2="445" y2="97" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="555" y1="97" x2="580" y2="97" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="97" x2="725" y2="97" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Analysis layer -->
+  <rect x="580" y="165" width="300" height="55" rx="6" fill="#fff" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4"/>
+  <text x="730" y="188" text-anchor="middle" font-size="11" font-weight="600" fill="#1b5e20">Python Analyzer</text>
+  <text x="730" y="205" text-anchor="middle" font-size="9" fill="#888">min · mean · median · p90–p99.99 · max · σ · histograms</text>
+
+  <line x1="802" y1="135" x2="730" y2="165" stroke="#2e7d32" stroke-width="1" marker-end="url(#arrow)" stroke-dasharray="3"/>
+
+  <!-- CPU Control (side) -->
+  <rect x="20" y="165" width="240" height="55" rx="6" fill="#f1f8e9" stroke="#7cb342" stroke-width="1" filter="url(#shadow)"/>
+  <text x="140" y="188" text-anchor="middle" font-size="10" font-weight="600" fill="#333">CPU Control (Worst-case Provocation)</text>
+  <text x="140" y="205" text-anchor="middle" font-size="9" fill="#888">Core pinning · Cache flush · TLB flush</text>
+
+  <line x1="140" y1="165" x2="140" y2="135" stroke="#7cb342" stroke-width="1" marker-end="url(#arrow)" stroke-dasharray="4"/>
+
+  <!-- Footer -->
+  <text x="450" y="255" text-anchor="middle" font-size="9" fill="#adb5bd" font-style="italic">Total scoped probe overhead: ~20ns · Empirical timing characterization, not formal WCET proof · Apache-2.0</text>
+</svg>

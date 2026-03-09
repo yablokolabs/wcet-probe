@@ -1,0 +1,8 @@
+flowchart LR
+    A["Instrumented C++ Function"] --> B["rdtsc Entry Probe"]
+    B --> C["Function Execution"]
+    C --> D["rdtscp Exit Probe"]
+    D --> E["Lock-free Ring Buffer"]
+    E --> F["Binary Trace File"]
+    F --> G["Python Analyzer"]
+    G --> H["Percentiles / Max / Histograms"]
