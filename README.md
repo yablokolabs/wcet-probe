@@ -1,12 +1,12 @@
 # wcet-probe
 
-**Measurement-based WCET analysis toolkit for C++ real-time code.**
+**Measurement-based execution-time characterization toolkit for C++ real-time code.**
 
-Instrument, measure, and statistically bound worst-case execution time for any C++ function. Zero-overhead probes, lock-free trace collection, and percentile analysis — the essential pre-certification timing tool.
+Instrument, measure, and characterize worst-case-oriented execution timing for C++ functions. Low-overhead probes, lock-free trace collection, and tail-latency analysis — an engineering tool for understanding timing behavior.
 
 ## What This Is
 
-A toolkit for answering: *"What is the worst-case execution time of this function?"*
+A toolkit for characterizing: *"What does the execution-time distribution of this function look like under stress?"*
 
 - **~20ns instrumentation overhead** per probe point (rdtsc + rdtscp + record)
 - **Lock-free ring buffer** — 1M+ samples, no allocation in hot path
