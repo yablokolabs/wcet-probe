@@ -1,12 +1,15 @@
 /// @file test_clock.cpp
 #include "wcet/clock.hpp"
-#include <cstdio>
 #include <cassert>
+#include <cstdio>
 
 void test_rdtsc_monotonic() {
     auto a = wcet::rdtsc();
     auto b = wcet::rdtsc();
-    if (b < a) { std::fprintf(stderr, "  ✗ rdtsc not monotonic\n"); return; }
+    if (b < a) {
+        std::fprintf(stderr, "  ✗ rdtsc not monotonic\n");
+        return;
+    }
     std::fprintf(stderr, "  ✓ rdtsc monotonic (delta=%lu ticks)\n", b - a);
 }
 
@@ -21,7 +24,7 @@ void test_calibration() {
 }
 
 void test_ticks_to_ns() {
-    std::uint64_t tsc_hz = 3'000'000'000ULL; // 3GHz
+    std::uint64_t tsc_hz = 3'000'000'000ULL;        // 3GHz
     auto ns = wcet::ticks_to_ns(3'000'000, tsc_hz); // 1ms worth of ticks
     // Should be ~1,000,000 ns
     if (ns < 900'000 || ns > 1'100'000) {

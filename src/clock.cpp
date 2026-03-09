@@ -1,8 +1,8 @@
 /// @file clock.cpp
 
 #include "wcet/clock.hpp"
-#include <thread>
 #include <chrono>
+#include <thread>
 
 namespace wcet {
 

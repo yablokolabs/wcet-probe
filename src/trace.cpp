@@ -5,17 +5,16 @@
 
 namespace wcet {
 
-std::size_t write_trace(const char* path,
-                        const std::vector<ProbeSample>& samples,
+std::size_t write_trace(const char *path, const std::vector<ProbeSample> &samples,
                         std::uint64_t tsc_hz) noexcept {
-    FILE* f = std::fopen(path, "wb");
+    FILE *f = std::fopen(path, "wb");
     if (!f) return 0;
 
     TraceHeader hdr{};
     std::memcpy(hdr.magic, "WCETPROB", 8);
-    hdr.version     = 1;
+    hdr.version = 1;
     hdr.sample_size = sizeof(ProbeSample);
-    hdr.tsc_hz      = tsc_hz;
+    hdr.tsc_hz = tsc_hz;
     hdr.num_samples = samples.size();
 
     std::fwrite(&hdr, sizeof(hdr), 1, f);
@@ -25,10 +24,9 @@ std::size_t write_trace(const char* path,
     return samples.size();
 }
 
-bool read_trace(const char* path,
-                std::vector<ProbeSample>& samples,
-                std::uint64_t& tsc_hz) noexcept {
-    FILE* f = std::fopen(path, "rb");
+bool read_trace(const char *path, std::vector<ProbeSample> &samples,
+                std::uint64_t &tsc_hz) noexcept {
+    FILE *f = std::fopen(path, "rb");
     if (!f) return false;
 
     TraceHeader hdr{};

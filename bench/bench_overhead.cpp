@@ -1,8 +1,8 @@
 /// @file bench_overhead.cpp
 /// Measure instrumentation overhead of WCET probes.
 
-#include "wcet/probe.hpp"
 #include "wcet/clock.hpp"
+#include "wcet/probe.hpp"
 #include <cstdio>
 
 int main() {
@@ -17,7 +17,7 @@ int main() {
         }
         auto elapsed = wcet::now_ns() - start;
         std::fprintf(stderr, "rdtsc overhead:     %.1f ns/call\n",
-                    static_cast<double>(elapsed) / N);
+                     static_cast<double>(elapsed) / N);
     }
 
     // Measure rdtscp overhead
@@ -29,7 +29,7 @@ int main() {
         }
         auto elapsed = wcet::now_ns() - start;
         std::fprintf(stderr, "rdtscp overhead:    %.1f ns/call\n",
-                    static_cast<double>(elapsed) / N);
+                     static_cast<double>(elapsed) / N);
     }
 
     // Measure probe record overhead
@@ -41,7 +41,7 @@ int main() {
         }
         auto elapsed = wcet::now_ns() - start;
         std::fprintf(stderr, "probe record:       %.1f ns/call\n",
-                    static_cast<double>(elapsed) / N);
+                     static_cast<double>(elapsed) / N);
     }
 
     // Measure full scoped probe overhead (rdtsc + rdtscp + record)
@@ -52,7 +52,7 @@ int main() {
         }
         auto elapsed = wcet::now_ns() - start;
         std::fprintf(stderr, "scoped probe:       %.1f ns/call\n",
-                    static_cast<double>(elapsed) / N);
+                     static_cast<double>(elapsed) / N);
     }
 
     return 0;

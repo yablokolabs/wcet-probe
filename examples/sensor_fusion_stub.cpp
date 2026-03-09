@@ -1,10 +1,10 @@
 /// @file sensor_fusion_stub.cpp
 /// Example: WCET analysis of a simulated sensor fusion pipeline.
 
-#include "wcet/probe.hpp"
 #include "wcet/harness.hpp"
-#include <cstdio>
+#include "wcet/probe.hpp"
 #include <cmath>
+#include <cstdio>
 
 static double sensors[256];
 static double weights[256];
@@ -46,7 +46,7 @@ int main() {
     config.trace_path = "sensor_fusion.wcet";
 
     std::fprintf(stderr, "Measuring sensor fusion (256 sensors, %lu iterations)...\n\n",
-                config.iterations);
+                 config.iterations);
 
     auto results = wcet::measure(config, sensor_fusion);
     wcet::print_results(results, "sensor_fusion_256");

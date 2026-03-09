@@ -14,7 +14,7 @@ bool pin_to_cpu(int cpu) noexcept;
 /// Set CPU frequency governor (requires root).
 /// governor: "performance", "powersave", "userspace", etc.
 /// Returns true on success.
-bool set_governor(int cpu, const char* governor) noexcept;
+bool set_governor(int cpu, const char *governor) noexcept;
 
 /// Flush L1/L2/L3 data caches by reading a large array.
 /// This forces subsequent code to fetch from memory, provoking worst-case latency.

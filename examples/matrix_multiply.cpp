@@ -2,8 +2,8 @@
 /// Example: WCET analysis of a 64x64 matrix multiply.
 /// Demonstrates instrumentation with WCET_PROBE macros.
 
-#include "wcet/probe.hpp"
 #include "wcet/harness.hpp"
+#include "wcet/probe.hpp"
 #include <cstdio>
 
 static double A[64][64], B[64][64], C[64][64];
@@ -21,8 +21,7 @@ static void matrix_multiply() {
     for (int i = 0; i < 64; ++i)
         for (int j = 0; j < 64; ++j) {
             double sum = 0;
-            for (int k = 0; k < 64; ++k)
-                sum += A[i][k] * B[k][j];
+            for (int k = 0; k < 64; ++k) sum += A[i][k] * B[k][j];
             C[i][j] = sum;
         }
 }
@@ -36,7 +35,7 @@ int main() {
     config.trace_path = "matrix_multiply.wcet";
 
     std::fprintf(stderr, "Measuring 64x64 matrix multiply (%lu iterations)...\n\n",
-                config.iterations);
+                 config.iterations);
 
     auto results = wcet::measure(config, matrix_multiply);
     wcet::print_results(results, "matrix_multiply_64x64");

@@ -50,9 +50,8 @@ std::uint64_t calibrate_tsc_hz() noexcept;
 /// Convert TSC ticks to nanoseconds given a frequency.
 [[nodiscard]] inline std::uint64_t ticks_to_ns(std::uint64_t ticks, std::uint64_t tsc_hz) noexcept {
     // Use 128-bit multiply to avoid overflow
-    return static_cast<std::uint64_t>(
-        (static_cast<__uint128_t>(ticks) * 1'000'000'000ULL) / tsc_hz
-    );
+    return static_cast<std::uint64_t>((static_cast<__uint128_t>(ticks) * 1'000'000'000ULL) /
+                                      tsc_hz);
 }
 
 } // namespace wcet

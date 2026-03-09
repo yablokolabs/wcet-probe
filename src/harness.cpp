@@ -12,19 +12,19 @@ namespace wcet {
 
 static ProbeContext g_context;
 
-ProbeContext& global_context() noexcept {
+ProbeContext &global_context() noexcept {
     return g_context;
 }
 
 // Thread-local context
 static thread_local ProbeContext tl_context;
 
-ProbeContext& thread_context() noexcept {
+ProbeContext &thread_context() noexcept {
     return tl_context;
 }
 
-HarnessResults measure(const HarnessConfig& config,
-                       const std::function<void()>& workload) noexcept {
+HarnessResults measure(const HarnessConfig &config,
+                       const std::function<void()> &workload) noexcept {
     HarnessResults results{};
 
     // Calibrate TSC
@@ -75,14 +75,14 @@ HarnessResults measure(const HarnessConfig& config,
     std::sort(ns_samples.begin(), ns_samples.end());
 
     auto n = ns_samples.size();
-    results.min_ns    = ns_samples.front();
-    results.max_ns    = ns_samples.back();
+    results.min_ns = ns_samples.front();
+    results.max_ns = ns_samples.back();
     results.median_ns = ns_samples[n / 2];
-    results.p90_ns    = ns_samples[static_cast<std::size_t>(n * 0.90)];
-    results.p95_ns    = ns_samples[static_cast<std::size_t>(n * 0.95)];
-    results.p99_ns    = ns_samples[static_cast<std::size_t>(n * 0.99)];
-    results.p999_ns   = ns_samples[std::min(static_cast<std::size_t>(n * 0.999), n - 1)];
-    results.p9999_ns  = ns_samples[std::min(static_cast<std::size_t>(n * 0.9999), n - 1)];
+    results.p90_ns = ns_samples[static_cast<std::size_t>(n * 0.90)];
+    results.p95_ns = ns_samples[static_cast<std::size_t>(n * 0.95)];
+    results.p99_ns = ns_samples[static_cast<std::size_t>(n * 0.99)];
+    results.p999_ns = ns_samples[std::min(static_cast<std::size_t>(n * 0.999), n - 1)];
+    results.p9999_ns = ns_samples[std::min(static_cast<std::size_t>(n * 0.9999), n - 1)];
 
     // Mean
     double sum = 0;
@@ -114,36 +114,27 @@ HarnessResults measure(const HarnessConfig& config,
     return results;
 }
 
-void print_results(const HarnessResults& results, const char* name) noexcept {
+void print_results(const HarnessResults &results, const char *name) noexcept {
     std::fprintf(stderr,
-        "┌──────────────────────────────────────────────┐\n"
-        "│  WCET Analysis: %-28s │\n"
-        "├──────────────────────────────────────────────┤\n"
-        "│  Samples:    %-10lu  TSC: %.2f GHz     │\n"
-        "├──────────────────────────────────────────────┤\n"
-        "│  Min:        %-10lu ns                  │\n"
-        "│  Mean:       %-10lu ns (σ=%lu ns)       │\n"
-        "│  Median:     %-10lu ns                  │\n"
-        "│  p90:        %-10lu ns                  │\n"
-        "│  p95:        %-10lu ns                  │\n"
-        "│  p99:        %-10lu ns                  │\n"
-        "│  p99.9:      %-10lu ns                  │\n"
-        "│  p99.99:     %-10lu ns                  │\n"
-        "│  Max (OWCET):%-10lu ns                  │\n"
-        "└──────────────────────────────────────────────┘\n",
-        name,
-        results.num_samples,
-        static_cast<double>(results.tsc_hz) / 1e9,
-        results.min_ns,
-        results.mean_ns, results.stddev_ns,
-        results.median_ns,
-        results.p90_ns,
-        results.p95_ns,
-        results.p99_ns,
-        results.p999_ns,
-        results.p9999_ns,
-        results.max_ns
-    );
+                 "┌──────────────────────────────────────────────┐\n"
+                 "│  WCET Analysis: %-28s │\n"
+                 "├──────────────────────────────────────────────┤\n"
+                 "│  Samples:    %-10lu  TSC: %.2f GHz     │\n"
+                 "├──────────────────────────────────────────────┤\n"
+                 "│  Min:        %-10lu ns                  │\n"
+                 "│  Mean:       %-10lu ns (σ=%lu ns)       │\n"
+                 "│  Median:     %-10lu ns                  │\n"
+                 "│  p90:        %-10lu ns                  │\n"
+                 "│  p95:        %-10lu ns                  │\n"
+                 "│  p99:        %-10lu ns                  │\n"
+                 "│  p99.9:      %-10lu ns                  │\n"
+                 "│  p99.99:     %-10lu ns                  │\n"
+                 "│  Max (OWCET):%-10lu ns                  │\n"
+                 "└──────────────────────────────────────────────┘\n",
+                 name, results.num_samples, static_cast<double>(results.tsc_hz) / 1e9,
+                 results.min_ns, results.mean_ns, results.stddev_ns, results.median_ns,
+                 results.p90_ns, results.p95_ns, results.p99_ns, results.p999_ns, results.p9999_ns,
+                 results.max_ns);
 }
 
 } // namespace wcet
