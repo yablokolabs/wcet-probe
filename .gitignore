@@ -1,0 +1,8 @@
+build*/
+*.wcet
+*.o
+*.d
+compile_commands.json
+.cache/
+.vscode/
+__pycache__/
